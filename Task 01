@@ -1,0 +1,64 @@
+class TodoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append({"task": task, "completed": False})
+        print(f"Task '{task}' added successfully!")
+
+    def list_tasks(self):
+        if self.tasks:
+            print("Tasks:")
+            for idx, task in enumerate(self.tasks, start=1):
+                status = "Done" if task["completed"] else "Pending"
+                print(f"{idx}. {task['task']} - {status}")
+        else:
+            print("No tasks added yet.")
+
+    def mark_completed(self, task_index):
+        try:
+            task = self.tasks[task_index]
+            task["completed"] = True
+            print(f"Task '{task['task']}' marked as completed!")
+        except IndexError:
+            print("Task index not found. Please enter a valid task index.")
+
+    def delete_task(self, task_index):
+        try:
+            task = self.tasks.pop(task_index)
+            print(f"Task '{task['task']}' deleted successfully!")
+        except IndexError:
+            print("Task index not found. Please enter a valid task index.")
+
+def main():
+    todo_list = TodoList()
+
+    while True:
+        print("\nMenu:")
+        print("1. Add Task")
+        print("2. List Tasks")
+        print("3. Mark Task as Completed")
+        print("4. Delete Task")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            task_description = input("Enter task description: ")
+            todo_list.add_task(task_description)
+        elif choice == '2':
+            todo_list.list_tasks()
+        elif choice == '3':
+            task_index = int(input("Enter the index of the task to mark as completed: ")) - 1
+            todo_list.mark_completed(task_index)
+        elif choice == '4':
+            task_index = int(input("Enter the index of the task to delete: ")) - 1
+            todo_list.delete_task(task_index)
+        elif choice == '5':
+            print("Exiting the to-do list application. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+if __name__ == "__main__":
+    main()
